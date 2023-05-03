@@ -69,8 +69,10 @@ def update_book(book_id):
     book.description = request_body["description"]
 
     db.session.commit()
+    
+    return make_response(jsonify(f"Book {book.id} successfully updated"))
 
-    return make_response(f"Book #{book.id} successfully updated")
+    
 
 @books_bp.route("/<book_id>", methods=["DELETE"])
 def delete_book(book_id):
@@ -79,7 +81,6 @@ def delete_book(book_id):
     db.session.delete(book)
     db.session.commit()
 
-    return make_response(f"Book #{book.id} successfully deleted")
-
+    return make_response(jsonify(f"Book #{book.id} successfully deleted"), 200)
 
 
