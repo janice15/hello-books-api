@@ -83,3 +83,6 @@ def delete_book(book_id):
 
 
 
+@books_bp.route("", methods=["GET", "POST"])
+def handle_books():
+    return make_response("I'm a teapot!", 418)
