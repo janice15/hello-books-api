@@ -19,3 +19,17 @@ def test_get_one_book(client, two_saved_books):
         "title": "Ocean Book",
         "description": "watr 4evr"
     }
+
+def test_create_one_book(client):
+    # Act
+    response = client.post("/books", json={
+        "title": "New Book",
+        "description": "The Best!"
+    })
+    response_body = response.get_data(as_text=True) 
+    
+    # Alternatively, we can jsonify the response body in our POST /books route
+    # return make_response(jsonify(f"Book {new_book.title} successfully created"), 201)
+    # Assert
+    assert response.status_code == 201
+    assert response_body == "Book New Book successfully created"
