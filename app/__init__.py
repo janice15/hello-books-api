@@ -18,13 +18,14 @@ def create_app(test_config=None):
     else:
         app.config["TESTING"] = True
         app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-        app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
-            "SQLALCHEMY_TEST_DATABASE_URI")
+        #app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
+            #"SQLALCHEMY_TEST_DATABASE_URI")
+        app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = os.environ.get(
+            "RENDER_DATABASE_URI")
 
     # Import models here
     from app.models.book import Book
     from app.models.author import Author
-
     db.init_app(app)
     migrate.init_app(app, db)
 
@@ -33,6 +34,4 @@ def create_app(test_config=None):
     app.register_blueprint(books_bp)
 
     from .author_routes import authors_bp
-    app.register_blueprint(authors_bp)
-
     return app
